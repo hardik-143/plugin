@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1B9C85;
+    --black: #03001c;
+}
+
+.wave {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0 10px;
+    position: relative;
+    color: #1B9C85;
+}
+
+.wave .text {
+    font-size: 50px;
+    font-weight: 900;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+    -webkit-text-fill-color: inherit;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: var(--black);
+}
+
+.wave .text:nth-child(1) {
+    animation: wave 4s ease-in-out infinite;
+}
+
+.wave .text:nth-child(2) {
+    z-index: 0;
+    -webkit-text-fill-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        clip-path: polygon(0% 46%,
+                17% 45%,
+                34% 50%,
+                56% 61%,
+                69% 62%,
+                86% 60%,
+                100% 51%,
+                100% 100%,
+                0% 100%);
+    }
+
+    50% {
+        clip-path: polygon(0% 59%,
+                16% 64%,
+                33% 65%,
+                52% 61%,
+                70% 52%,
+                85% 47%,
+                100% 48%,
+                100% 100%,
+                0% 100%);
+    }
+}
+
+.outline {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0 10px;
+    position: relative;
+    color: #1B9C85;
+}
+
+.outline .textWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.outline .textWrapper {
+    color: #03001c;
+    margin: 0 4px;
+}
+
+.outline .textWrapper .letter {
+    display: inline-block;
+    transition: all 0.3s ease;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: var(--black);
+    /* transform: scaleX(0.8) scaleY(1.2); */
+}
+
+.outline.has--hover .textWrapper .letter:hover {
+    -webkit-text-fill-color: var(--primary-color);
+    animation: squeez 1s ease-in-out infinite forwards;
+}
+
+@keyframes squeez {
+
+    0%,
+    40% {
+        transform: scaleX(1) scaleY(1.2);
+    }
+
+    20% {
+        transform: scaleX(1.2) scaleY(0.8);
+    }
+
+    50% {
+        transform: scaleX(1) scaleY(1);
+    }
+}
