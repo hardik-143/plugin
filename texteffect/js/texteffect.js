@@ -1,11 +1,10 @@
-// Define the myPicker() function as a jQuery extension
 $.fn.texteffect = function (o) {
   const validElement = ["div", "span", "p", "h1", "h2", "h3", "h4", "h5", "h6"];
   function isValidHexCode(hexCode) {
     return /^#[0-9A-F]{6}$/i.test(hexCode);
   }
   function isValidRGBCode(rgbCode) {
-    return /^#[0-9A-F]{6}$/i.test(rgbCode);
+    return /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/i.test(rgbCode);
   }
   function isValidFontSizeInPx(fontSize) {
     return /^(\d{1,3})px$/i.test(fontSize);
