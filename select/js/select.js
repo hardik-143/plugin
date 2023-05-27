@@ -137,10 +137,14 @@ $.fn.select = function (o) {
   doc.bind("keydown", function (e) {
     // close on escape key
     if (e.keyCode == 27) {
-        closeAllSelect();
+      closeAllSelect();
     }
+    let isNext = false;
     // move select-wrapper__focused class up down on arrow key
     if (e.keyCode == 38 || e.keyCode == 40) {
+      if (e.keyCode == 40) {
+        isNext = true;
+      }
       let selectWrapperEle = $(".select-wrapper__opened");
       let options = selectWrapperEle.find(
         ".select-wrapper__option:not(.select-wrapper__no-result)"
@@ -163,6 +167,15 @@ $.fn.select = function (o) {
         .addClass("select-wrapper__focused")
         .siblings()
         .removeClass("select-wrapper__focused");
+
+      let currentOffset = sDropdown.offset().top;
+      let nextTop = options.eq(index).offset().top;
+      if (isNext) {
+        currentOffset = currentOffset + sDropdown.outerHeight();
+        nextTop = nextTop + options.eq(index).outerHeight();
+      }
+      let nextOffset = sDropdown.scrollTop() + (nextTop - currentOffset);
+      sDropdown.scrollTop(nextOffset);
     }
     if (e.keyCode == 13) {
       let selectWrapperEle = $(".select-wrapper__opened");
