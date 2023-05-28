@@ -164,7 +164,7 @@ $.fn.select = function (o) {
   sSelected.append(sSelectedText); // append selected text into selected wrapper
   if (dO.allowClear) {
     sSelected.append(sClear); // append clear button into selected wrapper
-    if (selectEle.val()) {
+    if (selectEle.val() && showPlaceholder) {
       sClear.removeClass("hide");
     }
   }
