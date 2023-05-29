@@ -18,7 +18,7 @@ body {
   place-content: center;
   background-color: #f0f0f3;
 }
-.select-hidden{
+.select-hidden {
   position: absolute;
   top: 0;
   left: 0;
@@ -64,6 +64,12 @@ body {
   align-items: center;
   padding: 0 10px 0 10px;
 }
+.select-wrapper__selected-text-wrapper {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+  flex-grow: 1;
+}
 .select-wrapper__selected-text {
   font-size: 14px;
   color: #484545;
@@ -89,7 +95,7 @@ body {
   place-content: center;
   margin-left: 5px;
 }
-.select-wrapper__clear.hide{
+.select-wrapper__clear.hide {
   display: none;
 }
 
@@ -130,6 +136,9 @@ body {
 .select-wrapper__options-wrapper::-webkit-scrollbar-thumb:hover {
   background: #7a7a7cd7;
 }
+.select-wrapper__options{
+  padding: 0 3px;
+}
 .select-wrapper__option {
   padding: 3px 6px;
   cursor: pointer;
@@ -144,7 +153,8 @@ body {
 }
 .select-wrapper__option--selected {
   color: #0e0e0e;
-  background: rgb(160, 160, 160) !important;
+  background: #f5f0bb !important;
+  box-shadow: 0 2px 3px #7a7a7cd7;
 }
 .select-wrapper__option:not(.select-wrapper__option--selected):hover,
 .select-wrapper__focused:not(.select-wrapper__option--selected) {

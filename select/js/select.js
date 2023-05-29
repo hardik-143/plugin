@@ -58,7 +58,9 @@ $.fn.select = function (o) {
       });
     } else {
       selectEle.find("option").each(function () {
-        options.push(optionHtml($(this).attr("value"), $(this).text()));
+        if ($(this).attr("value")) {
+          options.push(optionHtml($(this).attr("value"), $(this).text()));
+        }
       });
     }
     addOptionsInSelect();
@@ -76,7 +78,7 @@ $.fn.select = function (o) {
         }
       });
     }
-    if(selectEle.val() && dO.data.length == 0){
+    if (selectEle.val() && dO.data.length == 0) {
       placeholder = selectEle.find(`option[value="${selectEle.val()}"]`).text();
       showPlaceholder = true;
     }
@@ -126,6 +128,9 @@ $.fn.select = function (o) {
     `<div class="select-wrapper select-wrapper-${id} ${dO.cls.container}" data-select="${id}"></div>`
   );
   let sSelected = $(`<div class="select-wrapper__selected"></div>`);
+  let sSelectedTextWrapper = $(
+    `<div class="select-wrapper__selected-text-wrapper"></div>`
+  );
   let sSelectedText = $(
     `<span class="select-wrapper__selected-text ${
       !showPlaceholder ? "select-wrapper__placeholder" : ""
@@ -161,7 +166,8 @@ $.fn.select = function (o) {
   // append all elements to select-wrapper
   selectEle.after(sWrapper); // append select wrapper after select element
   sWrapper.append(sSelected); // append selected wrapper into select wrapper
-  sSelected.append(sSelectedText); // append selected text into selected wrapper
+  sSelected.append(sSelectedTextWrapper); // append selected text wrapper into selected wrapper
+  sSelectedTextWrapper.append(sSelectedText); // append selected text into selected text wrapper
   if (dO.allowClear) {
     sSelected.append(sClear); // append clear button into selected wrapper
     if (selectEle.val() && showPlaceholder) {
@@ -200,6 +206,16 @@ $.fn.select = function (o) {
     sClear.addClass("hide");
   };
   // reset select
+
+  // toggle select dropdown
+  const toggleSelect = () => {
+    sWrapper
+      .toggleClass("select-wrapper__opened")
+      .find(".select-wrapper__dropdown")
+      .slideToggle(200);
+  };
+  // toggle select dropdown
+
   sSelected.bind("click", function (e) {
     // on click select wrapper
     if (
@@ -208,11 +224,7 @@ $.fn.select = function (o) {
     ) {
       return false;
     }
-    $(this)
-      .closest(".select-wrapper")
-      .toggleClass("select-wrapper__opened")
-      .find(".select-wrapper__dropdown")
-      .slideToggle(200);
+    toggleSelect();
   });
   sOptions.find(".select-wrapper__option").bind("click", function () {
     // on click option
@@ -317,12 +329,15 @@ $.fn.select = function (o) {
       if (index > options.length - 1) {
         index = 0;
       }
+      // move select-wrapper__focused class up down on arrow key
       options
         .eq(index)
         .addClass("select-wrapper__focused")
         .siblings()
         .removeClass("select-wrapper__focused");
+      // move select-wrapper__focused class up down on arrow key
 
+      // scroll to focused option
       let currentOffset = sOptionsWrapper.offset().top;
       let nextTop = options.eq(index).offset().top;
       if (isNext) {
@@ -331,8 +346,10 @@ $.fn.select = function (o) {
       }
       let nextOffset = sOptionsWrapper.scrollTop() + (nextTop - currentOffset);
       sOptionsWrapper.scrollTop(nextOffset);
+      // scroll to focused option
     }
     if (e.keyCode == 13) {
+      // on enter key select option which is focused and close dropdown
       let selectWrapperEle = $(".select-wrapper__opened");
       let focused = selectWrapperEle.find(".select-wrapper__focused");
       focused.trigger("click");
