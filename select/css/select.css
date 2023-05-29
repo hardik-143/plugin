@@ -136,9 +136,6 @@ body {
 .select-wrapper__options-wrapper::-webkit-scrollbar-thumb:hover {
   background: #7a7a7cd7;
 }
-.select-wrapper__options{
-  padding: 0 3px;
-}
 .select-wrapper__option {
   padding: 3px 6px;
   cursor: pointer;
