@@ -153,8 +153,7 @@ body {
 }
 .select-wrapper__option--selected {
   color: #0e0e0e;
-  background: #f5f0bb !important;
-  box-shadow: 0 2px 3px #7a7a7cd7;
+  background: #9e9e9ed7 !important;
 }
 .select-wrapper__option:not(.select-wrapper__option--selected):hover,
 .select-wrapper__focused:not(.select-wrapper__option--selected) {
