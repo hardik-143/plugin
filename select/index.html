@@ -10,35 +10,56 @@
 </head>
 
 <body>
-    <select id="city" multiple>
-        <option value=""></option>
-        <option value="new_york_city" selected>New York City</option>
-        <option value="los_angeles">Los Angeles</option>
-        <option value="chicago">Chicago</option>
-        <option value="houston">Houston</option>
-        <option value="phoenix">Phoenix</option>
-        <option value="philadelphia">Philadelphia</option>
-        <option value="san_antonio">San Antonio</option>
-        <option value="san_diego">San Diego</option>
-        <option value="dallas">Dallas</option>
-        <option value="san_jose">San Jose</option>
-        <option value="austin">Austin</option>
-        <option value="jacksonville">Jacksonville</option>
-        <option value="san_francisco">San Francisco</option>
-        <option value="columbus">Columbus</option>
-        <option value="indianapolis">Indianapolis</option>
-        <option value="fort_worth">Fort Worth</option>
-        <option value="charlotte">Charlotte</option>
-        <option value="seattle">Seattle</option>
-        <option value="denver">Denver</option>
-        <option value="el_paso">El Paso</option>
-        <option value="washington">Washington</option>
-        <option value="boston">Boston</option>
-        <option value="detroit">Detroit</option>
-        <option value="nashville">Nashville</option>
-    </select>
+    <div class="example">
+        <label>single select</label>
+        <select id="single" data-placeholder="select city">
+            <option value="new_york_city" selected>New York City</option>
+            <option value="los_angeles">Los Angeles</option>
+            <option value="chicago">Chicago</option>
+            <option value="houston">Houston</option>
+            <option value="phoenix">Phoenix</option>
+            <option value="philadelphia">Philadelphia</option>
+            <option value="san_antonio">San Antonio</option>
+            <option value="san_diego">San Diego</option>
+            <option value="dallas">Dallas</option>
+            <option value="san_jose">San Jose</option>
+            <option value="austin">Austin</option>
+            <option value="jacksonville">Jacksonville</option>
+            <option value="san_francisco">San Francisco</option>
+            <option value="columbus">Columbus</option>
+            <option value="indianapolis">Indianapolis</option>
+            <option value="fort_worth">Fort Worth</option>
+            <option value="charlotte">Charlotte</option>
+            <option value="seattle">Seattle</option>
+            <option value="denver">Denver</option>
+            <option value="el_paso">El Paso</option>
+            <option value="washington">Washington</option>
+            <option value="boston">Boston</option>
+            <option value="detroit">Detroit</option>
+            <option value="nashville">Nashville</option>
+        </select>
+    </div>
+    <div class="example">
+        <label>multiple select</label>
+        <select id="multiple" multiple>
+            <option value="new_york_city" selected>New York City</option>
+            <option value="los_angeles">Los Angeles</option>
+            <option value="chicago">Chicago</option>
+            <option value="houston">Houston</option>
+            <option value="jacksonville">Jacksonville</option>
+            <option value="san_francisco">San Francisco</option>
+            <option value="columbus">Columbus</option>
+            <option value="indianapolis">Indianapolis</option>
+            <option value="fort_worth">Fort Worth</option>
+            <option value="charlotte">Charlotte</option>
+            <option value="seattle">Seattle</option>
+            <option value="denver">Denver</option>
+        </select>
+    </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script src="./js/jquery-3.6.0.min.js"></script>
     <script src="./js/select.js"></script>
     <script src="./index.js"></script>
 

@@ -9,21 +9,25 @@ $.fn.select = function (o) {
   }
   // check if select already initialized
 
+  let isMultiple = $(this).attr("multiple") ? true : false;
+  let sRemoveFromMultiple = "";
+
   // default options
   let dO = {
-    search: o.search || false,
-    data: o.data || [],
-    selected: o.selected || "",
-    allowClear: o.allowClear || false,
+    search: o?.search || false,
+    data: o?.data || [],
+    selected: o?.selected || "",
+    allowClear: o?.allowClear || false,
     cls: {
-      container: o.cls && o.cls.container ? o.cls.container : "",
-      search: o.cls && o.cls.search ? o.cls.search : "",
-      searchInput: o.cls && o.cls.searchInput ? o.cls.searchInput : "",
-      option: o.cls && o.cls.option ? o.cls.option : "",
-      optionHover: o.cls && o.cls.optionHover ? o.cls.optionHover : "",
-      optionSelected: o.cls && o.cls.optionSelected ? o.cls.optionSelected : "",
+      container: o?.cls && o?.cls.container ? o?.cls.container : "",
+      search: o?.cls && o?.cls.search ? o?.cls.search : "",
+      searchInput: o?.cls && o?.cls.searchInput ? o?.cls.searchInput : "",
+      option: o?.cls && o?.cls.option ? o?.cls.option : "",
+      optionHover: o?.cls && o?.cls.optionHover ? o?.cls.optionHover : "",
+      optionSelected:
+        o?.cls && o?.cls.optionSelected ? o?.cls.optionSelected : "",
     },
-    noResult: o.noResult || "No options found",
+    noResult: o?.noResult || "No options found",
   };
   // default options
   let selectEle = $(this);
@@ -42,6 +46,8 @@ $.fn.select = function (o) {
       `<div class="select-wrapper__option ${dO.cls.option}" data-value="${value}" value="${value}">${text}</div>`
     )[0];
   };
+
+  // add options in select
   const addOptionsInSelect = () => {
     selectEle.html("");
     options.forEach((item) => {
@@ -51,6 +57,9 @@ $.fn.select = function (o) {
       selectEle.append(opt);
     });
   };
+  // add options in select
+
+  // create options list whether data is passed or not
   const createOptionsList = () => {
     if (dO.data.length > 0) {
       dO.data.forEach((item) => {
@@ -65,6 +74,7 @@ $.fn.select = function (o) {
     }
     addOptionsInSelect();
   };
+  // create options list whether data is passed or not
   createOptionsList();
 
   // set selected option text as placeholder otherwise set data-placeholder as placeholder
@@ -77,10 +87,6 @@ $.fn.select = function (o) {
           showPlaceholder = true;
         }
       });
-    }
-    if (selectEle.val() && dO.data.length == 0) {
-      placeholder = selectEle.find(`option[value="${selectEle.val()}"]`).text();
-      showPlaceholder = true;
     }
     if (!placeholder) {
       selectEle.val("");
@@ -104,6 +110,16 @@ $.fn.select = function (o) {
   };
   // close select dropdown
 
+  const closeAllExceptCurrent = (current) => {
+    console.log(current.closest('.select-wrapper').data("select"));
+    $(".select-wrapper").each(function () {
+      if ($(this).closest('.select-wrapper').data("select") !== current.closest('.select-wrapper').data("select")) {
+        $(this).removeClass("select-wrapper__opened");
+        $(this).find(".select-wrapper__dropdown").slideUp(200);
+      }
+    });
+  };
+
   // get arrow
   const getArrow = () => {
     let sArrow = $(`<span class="select-wrapper__arrow"></span>`);
@@ -125,7 +141,9 @@ $.fn.select = function (o) {
   getPlaceholder();
   // select-wrapper
   let sWrapper = $(
-    `<div class="select-wrapper select-wrapper-${id} ${dO.cls.container}" data-select="${id}"></div>`
+    `<div class="select-wrapper select-wrapper-${id} ${dO.cls.container} ${
+      isMultiple ? "select-wrapper-multiple" : ""
+    }" data-select="${id}"></div>`
   );
   let sSelected = $(`<div class="select-wrapper__selected"></div>`);
   let sSelectedTextWrapper = $(
@@ -162,6 +180,43 @@ $.fn.select = function (o) {
     `<div class="select-wrapper__option select-wrapper__no-result hide">${dO.noResult}</div>`
   );
   // select options
+
+  // get selected value html for multiple select
+  const getSelectedValueHTML = (value, text) => {
+    sRemoveFromMultiple = $(
+      `<span class="select-wrapper__selected-text select-wrapper__selected-text-multiple" data-value="${value}">
+      <span>${text}</span><span class="select-wrapper__selected-text-multiple-clear"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#000" stroke-width="2" d="M7,7 L17,17 M7,17 L17,7"></path></svg></span>
+      </span>`
+    );
+    sRemoveFromMultiple
+      .find(".select-wrapper__selected-text-multiple-clear")
+      .bind("click", function () {
+        // on click remove from multiple
+        let value = $(this).parent().data("value");
+        let option = sOptions.find(
+          `.select-wrapper__option[data-value="${value}"]`
+        );
+        option.removeClass("select-wrapper__option--selected");
+        option.show();
+        if (
+          sWrapper.find(".select-wrapper__selected-text-multiple").length == 1
+        ) {
+          sWrapper
+            .find(".select-wrapper__selected-text")
+            .addClass("select-wrapper__placeholder")
+            .removeClass("select-wrapper__selected-text-multiple")
+            .text(setPlaceholder());
+          sClear.addClass("hide");
+        } else {
+          $(this).parent().remove();
+        }
+        selectEle.val("");
+        selectEle.find(`option[value="${value}"]`).prop("selected", false);
+        selectEle.trigger("change");
+      });
+    return sRemoveFromMultiple[0];
+  };
+  // get selected value html for multiple select
 
   // append all elements to select-wrapper
   selectEle.after(sWrapper); // append select wrapper after select element
@@ -217,37 +272,85 @@ $.fn.select = function (o) {
   // toggle select dropdown
 
   sSelected.bind("click", function (e) {
-    // on click select wrapper
+    // close all opened select wrapper except current one
+    closeAllExceptCurrent(sWrapper);
+    // close all opened select wrapper except current one
+
     if (
       $(e.target).hasClass("select-wrapper__clear") ||
       $(e.target).closest(".select-wrapper__clear").length > 0
     ) {
+      // on click clear button
       return false;
     }
-    toggleSelect();
+    if (isMultiple) {
+      // if multiple select then toggle select on click of selected wrapper
+      if (sWrapper.find(".select-wrapper__placeholder").length > 0) {
+        // if placeholder is visible then open select
+        toggleSelect();
+      } else {
+        // if placeholder is not visible then close select
+        if (
+          $(e.target).hasClass("select-wrapper__arrow") ||
+          $(e.target).closest(".select-wrapper__arrow").length > 0
+        ) {
+          // if click on arrow then toggle select
+          toggleSelect();
+        }
+      }
+    } else {
+      // if single select then open select on click of selected wrapper
+      toggleSelect();
+    }
   });
   sOptions.find(".select-wrapper__option").bind("click", function () {
-    // on click option
     let value = $(this).data("value");
     let text = $(this).text();
-    $(this)
-      .addClass(`select-wrapper__option--selected ${dO.cls.optionSelected}`)
-      .siblings()
-      .removeClass(`select-wrapper__option--selected ${dO.cls.optionSelected}`);
-    let selectEle = $(this).closest(".select-wrapper").data("select");
-    let selectWrapperEle = $(this).closest(".select-wrapper");
-    sClear.removeClass("hide");
-    $(`select[id="${selectEle}"]`).val(value);
-    selectWrapperEle.toggleClass("select-wrapper__opened");
-    selectWrapperEle
-      .find(".select-wrapper__selected-text")
-      .text(text)
-      .removeClass("select-wrapper__placeholder");
-    selectWrapperEle.find(".select-wrapper__dropdown").slideUp(200);
-    selectWrapperEle
-      .find(".select-wrapper__option:not(.select-wrapper__no-result)")
-      .show();
-    sSearch.val("");
+    if (!isMultiple) {
+      $(this)
+        .addClass(`select-wrapper__option--selected ${dO.cls.optionSelected}`)
+        .siblings()
+        .removeClass(
+          `select-wrapper__option--selected ${dO.cls.optionSelected}`
+        );
+      sClear.removeClass("hide");
+      selectEle.val(value);
+      sWrapper.toggleClass("select-wrapper__opened");
+      sWrapper
+        .find(".select-wrapper__selected-text")
+        .text(text)
+        .removeClass("select-wrapper__placeholder");
+      sWrapper.find(".select-wrapper__dropdown").slideUp(200);
+      sWrapper
+        .find(".select-wrapper__option:not(.select-wrapper__no-result)")
+        .show();
+      sSearch.val("");
+    } else {
+      // multiple select
+      if (sWrapper.find(".select-wrapper__selected-text-wrapper").length == 1) {
+        sWrapper
+          .find(".select-wrapper__selected-text-wrapper")
+          .children()
+          .hasClass("select-wrapper__placeholder")
+          ? sWrapper.find(".select-wrapper__selected-text-wrapper").empty()
+          : null;
+      }
+      if ($(this).hasClass("select-wrapper__option--selected")) {
+        $(this).removeClass(
+          `select-wrapper__option--selected ${dO.cls.optionSelected}`
+        );
+        sWrapper
+          .find(`.select-wrapper__selected-text[data-value=${value}]`)
+          .remove();
+      } else {
+        $(this).addClass(
+          `select-wrapper__option--selected ${dO.cls.optionSelected}`
+        );
+        sWrapper
+          .find(".select-wrapper__selected-text-wrapper")
+          .append(getSelectedValueHTML(value, text));
+      }
+    }
   });
   sClear.bind("click", function () {
     // on click clear button
@@ -362,7 +465,19 @@ $.fn.select = function (o) {
       sSelected.trigger("click");
     },
     getValue: function () {
-      return selectEle.val();
+      if (!isMultiple) {
+        return selectEle.val();
+      } else {
+        let values = [];
+        sWrapper
+          .find(
+            ".select-wrapper__selected-text:not(.select-wrapper__placeholder)"
+          )
+          .each(function () {
+            values.push($(this).data("value"));
+          });
+        return values;
+      }
     },
     setValue: function (value) {
       let option = sOptions.find(
@@ -373,10 +488,22 @@ $.fn.select = function (o) {
       }
     },
     getText: function () {
-      if (sSelectedText.hasClass("select-wrapper__placeholder")) {
-        return undefined;
+      if (!isMultiple) {
+        if (sSelectedText.hasClass("select-wrapper__placeholder")) {
+          return undefined;
+        } else {
+          return sSelectedText.text();
+        }
       } else {
-        return sSelectedText.text();
+        let texts = [];
+        sWrapper
+          .find(
+            ".select-wrapper__selected-text:not(.select-wrapper__placeholder)"
+          )
+          .each(function () {
+            texts.push($(this).text());
+          });
+        return texts;
       }
     },
     getOptions: function () {
