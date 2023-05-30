@@ -1,17 +1,17 @@
 $.fn.select = function (o) {
-  // check if select already initialized
   let id = $(this).attr("id");
   let doc = $(document);
+  let isMultiple = $(this).attr("multiple") ? true : false;
+  let sRemoveFromMultiple = "";
+  // check if select already initialized on given input
   if (doc.find(`.select-wrapper-${id}`).length > 0) {
     throw new Error(
       `Select already initialized on #${id} \n If you want to reinitialize select, please use .destroy() method`
     );
   }
-  // check if select already initialized
+  // check if select already initialized on given input
 
-  let isMultiple = $(this).attr("multiple") ? true : false;
-  let sRemoveFromMultiple = "";
-
+  //
   // default options
   let dO = {
     search: o?.search || false,
@@ -30,18 +30,21 @@ $.fn.select = function (o) {
     noResult: o?.noResult || "No options found",
   };
   // default options
-  let selectEle = $(this);
-  let options = [];
-  let placeholder = "";
-  let showPlaceholder = false;
-  const isSelected = (value) => {
+  //
+
+
+  let selectEle = $(this); // select element
+  let options = []; // default empty options list
+  let placeholder = ""; // initial placeholder | will be updated when select initialized
+  let showPlaceholder = false; // used to add placeholder at initialization
+  const isSelected = (value) => { // used to check whether given value is selected or not
     if (value === dO.selected) {
       return true;
     } else {
       return false;
     }
   };
-  const optionHtml = (value, text) => {
+  const optionHtml = (value, text) => { // single option html
     return $(
       `<div class="select-wrapper__option ${dO.cls.option}" data-value="${value}" value="${value}">${text}</div>`
     )[0];
@@ -75,9 +78,9 @@ $.fn.select = function (o) {
     addOptionsInSelect();
   };
   // create options list whether data is passed or not
-  createOptionsList();
+  createOptionsList(); // craete html for options list
 
-  // set selected option text as placeholder otherwise set data-placeholder as placeholder
+  // set selected option text as placeholder otherwise set ['data-placeholder'] as placeholder
   const getPlaceholder = () => {
     if (dO.selected) {
       options.forEach((item) => {
@@ -111,9 +114,12 @@ $.fn.select = function (o) {
   // close select dropdown
 
   const closeAllExceptCurrent = (current) => {
-    console.log(current.closest('.select-wrapper').data("select"));
+    console.log(current.closest(".select-wrapper").data("select"));
     $(".select-wrapper").each(function () {
-      if ($(this).closest('.select-wrapper').data("select") !== current.closest('.select-wrapper').data("select")) {
+      if (
+        $(this).closest(".select-wrapper").data("select") !==
+        current.closest(".select-wrapper").data("select")
+      ) {
         $(this).removeClass("select-wrapper__opened");
         $(this).find(".select-wrapper__dropdown").slideUp(200);
       }
@@ -460,11 +466,11 @@ $.fn.select = function (o) {
   });
 
   let returnObj = {
-    close: closeAllSelect,
-    open: function () {
+    close: closeAllSelect, // close select dropdown
+    open: function () { // open select dropdown
       sSelected.trigger("click");
     },
-    getValue: function () {
+    getValue: function () { // selected value -- string [single] || array [multiple]
       if (!isMultiple) {
         return selectEle.val();
       } else {
@@ -479,7 +485,7 @@ $.fn.select = function (o) {
         return values;
       }
     },
-    setValue: function (value) {
+    setValue: function (value) { // set value into select --  works for both single and multiple
       let option = sOptions.find(
         `.select-wrapper__option[data-value="${value}"]`
       );
@@ -487,7 +493,7 @@ $.fn.select = function (o) {
         option.trigger("click");
       }
     },
-    getText: function () {
+    getText: function () { // selected text -- string [single] || array [multiple]
       if (!isMultiple) {
         if (sSelectedText.hasClass("select-wrapper__placeholder")) {
           return undefined;
@@ -509,7 +515,7 @@ $.fn.select = function (o) {
     getOptions: function () {
       return sOptions.find(".select-wrapper__option");
     },
-    getOptionsList: function () {
+    getOptionsList: function () { // get options list in obj
       let options = [];
       sOptions
         .find(".select-wrapper__option:not(.select-wrapper__no-result)")
@@ -522,29 +528,31 @@ $.fn.select = function (o) {
         });
       return options;
     },
-    destroy: function () {
+    destroy: function () { // remove select wrapper 
       sWrapper.remove();
       selectEle.removeClass("select-hidden");
     },
-    addOption: function (option) {
+    addOption: function (option) { // add option -- text and value needs to pass in object
       let optionEle = `<div class="select-wrapper__option" data-value="${option.value}">${option.text}</div>`;
       sOptions.append(optionEle);
     },
-    removeOption: function (value) {
+    removeOption: function (value) { // remove option -- value needs to pass
       let option = sOptions.find(
         `.select-wrapper__option[data-value="${value}"]`
       );
-      option.remove();
+      if(option.length > 0){
+        option.remove();
+      }
     },
-    disable: function () {
+    disable: function () { // disable select
       sWrapper.addClass("select-wrapper--disabled");
       selectEle.prop("disabled", true);
     },
-    enable: function () {
+    enable: function () { // enable select
       sWrapper.removeClass("select-wrapper--disabled");
       selectEle.prop("disabled", false);
     },
-    reset: function () {
+    reset: function () { // reset select at initial state
       resetSelect();
     },
   };
