@@ -1,6 +1,5 @@
 function thetooltip(elements) {
   let doc = document;
-  // let elements = this;
 
   const createTooltip = (ele, ttooltipIndex) => {
     // default properties of tooltip
@@ -29,9 +28,8 @@ function thetooltip(elements) {
     ttooltip.innerHTML = dO.content;
 
     // set position of tooltip
-    let elePos = ele.getBoundingClientRect();
-    let eleTop = elePos.top;
-    let eleLeft = elePos.left;
+    let eleTop = ele.offsetTop; 
+    let eleLeft = ele.offsetLeft;
     let eleWidth = ele.offsetWidth;
     let eleHeight = ele.offsetHeight;
     let ttooltipWidth = ttooltip.offsetWidth;
@@ -86,11 +84,11 @@ function thetooltip(elements) {
   const removeTooltip = (i) => {
     let ttooltip = doc.querySelector(`.ttooltip-${i}`);
     if (ttooltip.classList.contains("ttooltip-blunt")) {
-      ttooltip.parentNode.removeChild(ttooltip);
+      ttooltip?.parentNode?.removeChild(ttooltip);
     } else {
       ttooltip.classList.add("ttooltip-close");
       setTimeout(() => {
-        ttooltip.parentNode.removeChild(ttooltip);
+        ttooltip?.parentNode?.removeChild(ttooltip);
       }, 200);
     }
   };
