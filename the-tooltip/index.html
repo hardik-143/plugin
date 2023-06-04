@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #03001c;
+    }
+
+    body {
+      padding: 10px;
+      width: 100%;
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      align-items: center;
+      padding-top: 20px;
+      background-color: #f0f0f3;
+    }
+
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    div:not(.wrapper, .ttooltip) {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    .wrapper>span {
+      display: inline-block;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 20px;
+      cursor: pointer;
+      background: #03001c;
+      color: #fff;
+    }
+  </style>
+  <link rel="stylesheet" href="./css/the-tooltip.css">
+</head>
+
+<body>
+  <div>
+    <h2>Placement</h2>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip TOP" data-ttooltip-pos="top">Top
+        tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip BOTTOM" data-ttooltip-pos="bottom">Bottom
+        tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip LEFT" data-ttooltip-pos="left">Left tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip RIGHT" data-ttooltip-pos="right">Right tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip TOP LEFT" data-ttooltip-pos="top-left">Top left tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip TOP RIGHT" data-ttooltip-pos="top-right">Top Right tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip BOTTOM RIGHT" data-ttooltip-pos="bottom-right">Bottom Right
+        tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="Tooltip BOTTOM LEFT" data-ttooltip-pos="bottom-left">Bottom Left
+        tooltip</span>
+    </div>
+  </div>
+  <div>
+    <h2>Size</h2>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-size="small" data-ttooltip-text="small" data-ttooltip-pos="top">Small
+        Tooltip Here</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-size="medium" data-ttooltip-text="medium tooltip here"
+        data-ttooltip-pos="top">Medium
+        Tooltip Here</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-size="large" data-ttooltip-text="large tooltip here"
+        data-ttooltip-pos="top">Large
+        Tooltip Here</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-size="fit" data-ttooltip-text="fit tooltip here" data-ttooltip-pos="top">Fit
+        Tooltip Here</span>
+    </div>
+  </div>
+  <div>
+    <h2>No animation</h2>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-blunt data-ttooltip-text="No animation here" data-ttooltip-pos="bottom">
+        Tooltip No animation</span>
+    </div>
+  </div>
+  <div>
+    <h2>Always Visible</h2>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-visible data-ttooltip-text="Always visible" data-ttooltip-pos="bottom">
+        Tooltip Always Visible</span>
+    </div>
+  </div>
+  <div>
+    <h2>show on click</h2>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="click to hide" data-ttooltip-pos="bottom" data-ttooltip-toggle="click">
+        click to toggle tooltip</span>
+    </div>
+  </div>
+  <script src="./js/the-tooltip.js"></script>
+  <script>
+  </script>
+</body>
+
+</html>
