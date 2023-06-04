@@ -1,4 +1,3 @@
-// $.fn.thetooltip =
 function thetooltip(elements) {
   let doc = document;
   // let elements = this;
