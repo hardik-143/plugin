@@ -12,7 +12,7 @@ function thetooltip(elements) {
     if (toolTipExists(ttooltipIndex)) return;
     // default properties of tooltip
     let dO = {
-      pos: ele.getAttribute("data-ttooltip-pos") || "bottom",
+      pos: ele.getAttribute("data-ttooltip-pos") || "top",
       content: ele.getAttribute("data-ttooltip-text"),
       size: ele.getAttribute("data-ttooltip-size"),
       visible: ele.hasAttribute("data-ttooltip-visible"),
