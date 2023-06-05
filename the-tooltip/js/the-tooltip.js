@@ -17,12 +17,14 @@ function thetooltip(elements) {
       size: ele.getAttribute("data-ttooltip-size"),
       visible: ele.hasAttribute("data-ttooltip-visible"),
       blunt: ele.hasAttribute("data-ttooltip-blunt"),
+      color: ele.getAttribute("data-ttooltip-color"),
     };
     // default properties of tooltip
 
     let ttooltip = document.createElement("div"); // create tooltip
     document.body.appendChild(ttooltip); // append tooltip to body
     ttooltip.classList.add("hide"); // hide tooltip as default
+    ttooltip.classList.add(`ttooltip-${dO.color}`); // set color of tooltip
     let position = {
       top: 0,
       left: 0,
@@ -127,7 +129,7 @@ function thetooltip(elements) {
       }
     }
   }, 30);
-};
+}
 document.addEventListener("DOMContentLoaded", function () {
   let elements = document.querySelectorAll("[data-ttooltip]");
   thetooltip(elements);

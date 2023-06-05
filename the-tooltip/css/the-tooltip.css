@@ -145,3 +145,129 @@
   transform: translateX(-50%);
   border-bottom-color: #000;
 }
+
+/* color */
+
+/* red */
+.ttooltip-red {
+  background-color: #ff0000;
+}
+.ttooltip-red::after {
+  border-top-color: #ff0000;
+}
+
+/* lime */
+.ttooltip-lime {
+  background-color: #00ff00;
+  color: #000;
+}
+.ttooltip-lime::after {
+  border-top-color: #00ff00;
+}
+
+/* yellow */
+.ttooltip-yellow {
+  background-color: #ffff00;
+  color: #000;
+}
+.ttooltip-yellow::after {
+  border-top-color: #ffff00;
+}
+
+
+/* orange */
+.ttooltip-orange {
+  background-color: #ffa500;
+  color: #000;
+}
+.ttooltip-orange::after {
+  border-top-color: #ffa500;
+}
+
+
+/* blue */
+.ttooltip-blue {
+  background-color: #0000ff;
+}
+.ttooltip-blue::after {
+  border-top-color: #0000ff;
+}
+
+/* cyan */
+.ttooltip-cyan {
+  background-color: #00ffff;
+  color: #000;
+}
+.ttooltip-cyan::after {
+  border-top-color: #00ffff;
+}
+
+/* magenta */
+.ttooltip-magenta {
+  background-color: #ff00ff;
+}
+.ttooltip-magenta::after {
+  border-top-color: #ff00ff;
+}
+
+/* silver */
+.ttooltip-silver {
+  background-color: #c0c0c0;
+  color: #000;
+}
+.ttooltip-silver::after {
+  border-top-color: #c0c0c0;
+}
+
+/* gray */
+.ttooltip-gray {
+  background-color: #808080;
+  color: #000;
+}
+.ttooltip-gray::after {
+  border-top-color: #808080;
+}
+
+/* maroon */
+.ttooltip-maroon {
+  background-color: #800000;
+  color: #000;
+}
+.ttooltip-maroon::after {
+  border-top-color: #800000;
+}
+
+/* olive */
+.ttooltip-olive {
+  background-color: #808000;
+  color: #000;
+}
+.ttooltip-olive::after {
+  border-top-color: #808000;
+}
+
+/* green */
+.ttooltip-green {
+  background-color: #008000;
+}
+.ttooltip-green::after {
+  border-top-color: #008000;
+}
+
+/* purple */
+.ttooltip-purple {
+  background-color: #800080;
+  color: #000;
+}
+.ttooltip-purple::after {
+  border-top-color: #800080;
+}
+
+/* teal */
+.ttooltip-teal {
+  background-color: #008080;
+  color: #000;
+}
+.ttooltip-teal::after {
+  border-top-color: #008080;
+}
