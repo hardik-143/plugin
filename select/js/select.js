@@ -230,7 +230,9 @@ $.fn.select = function (o) {
         option.removeClass("select-wrapper__option--selected");
         option.show();
         if (
-          sWrapper.find(".select-wrapper__selected-text-multiple").length == 1
+          sWrapper.find(
+            ".select-wrapper__selected-text-multiple:not(.select-wrapper__placeholder)"
+          ).length == 1
         ) {
           sWrapper
             .find(".select-wrapper__selected-text")
@@ -323,25 +325,32 @@ $.fn.select = function (o) {
       return false;
     }
     if (isMultiple) {
-      // if multiple select then toggle select on click of selected wrapper
-      if (sWrapper.find(".select-wrapper__placeholder").length > 0) {
-        // if placeholder is visible then open select
+      if (
+        $(e.target).hasClass("select-wrapper__placeholder") ||
+        $(e.target).closest(".select-wrapper__placeholder").length > 0 ||
+        $(e.target).hasClass("select-wrapper__arrow") ||
+        $(e.target).closest(".select-wrapper__arrow").length > 0 || 
+        $(e.target).hasClass("select-wrapper__selected-text-wrapper")
+      ) {
         toggleSelect();
-      } else {
-        // if placeholder is not visible then close select
-        if (
-          $(e.target).hasClass("select-wrapper__arrow") ||
-          $(e.target).closest(".select-wrapper__arrow").length > 0
-        ) {
-          // if click on arrow then toggle select
-          toggleSelect();
-        }
       }
     } else {
       // if single select then open select on click of selected wrapper
       toggleSelect();
     }
   });
+  const updateMultipleSelect = () => {
+    // update multiple select
+    let selectedArr = [];
+    sOptions.find(".select-wrapper__option").each(function () {
+      // console.log($(this));
+      if ($(this).hasClass("select-wrapper__option--selected")) {
+        selectedArr.push($(this).data("value"));
+      }
+    });
+    selectEle.val(selectedArr);
+    selectEle.trigger("change");
+  };
   sOptions.find(".select-wrapper__option").bind("click", function () {
     let value = $(this).data("value");
     let text = $(this).text();
@@ -366,23 +375,28 @@ $.fn.select = function (o) {
       sSearch.val("");
     } else {
       // multiple select
-      if (sWrapper.find(".select-wrapper__selected-text-wrapper").length == 1) {
-        sWrapper
-          .find(".select-wrapper__selected-text-wrapper")
-          .children()
-          .hasClass("select-wrapper__placeholder")
-          ? sWrapper.find(".select-wrapper__selected-text-wrapper").empty()
-          : null;
+      if (
+        sWrapper.find(
+          ".select-wrapper__selected-text-wrapper .select-wrapper__placeholder"
+        ).length == 1
+      ) {
+        sWrapper.find(".select-wrapper__selected-text-wrapper").empty();
       }
       if ($(this).hasClass("select-wrapper__option--selected")) {
         $(this).removeClass(
           `select-wrapper__option--selected ${dO.cls.optionSelected}`
         );
-        sWrapper
-          .find(`.select-wrapper__selected-text[data-value=${value}]`)
-          .remove();
-        if (sWrapper.find(".select-wrapper__selected-text").length == 0) {
-          resetSelect();
+        if (sWrapper.find(".select-wrapper__selected-text").length == 1) {
+          sWrapper
+            .find(`.select-wrapper__selected-text`)
+            .text(setPlaceholder())
+            .addClass("select-wrapper__placeholder")
+            .removeClass("select-wrapper__selected-text-multiple");
+          sClear.addClass("hide");
+        } else {
+          sWrapper
+            .find(`.select-wrapper__selected-text[data-value=${value}]`)
+            .remove();
         }
       } else {
         $(this).addClass(
@@ -393,15 +407,22 @@ $.fn.select = function (o) {
           .append(getSelectedValueHTML(value, text));
       }
       closeAllSelect();
-      if (sWrapper.find(".select-wrapper__selected-text").length > 0) {
+      if (
+        sWrapper.find(
+          ".select-wrapper__selected-text:not(.select-wrapper__placeholder)"
+        ).length > 0
+      ) {
         sClear.removeClass("hide");
       }
+      updateMultipleSelect();
     }
   });
   sClear.bind("click", function () {
     // on click clear button
     resetSelect();
     if (isMultiple) {
+      // remove select-wrapper__selected-text except first one
+      sWrapper.find(".select-wrapper__selected-text").not(":first").remove();
       sWrapper
         .find(".select-wrapper__selected-text")
         .addClass("select-wrapper__placeholder")
