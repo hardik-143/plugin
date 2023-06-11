@@ -1,13 +1,41 @@
 $(document).ready(function () {
-  $("#single").select({
-    search: true,
-    allowClear: true,
-    cls: {
-      container: "select---container",
-      optionHover: "select---option---hover",
-      optionSelected: "select---option---selected",
-    },
-  });
+    // $("#single0").select({
+    //   cls: {
+    //     container: "select---container",
+    //     optionHover: "select---option---hover",
+    //     optionSelected: "select---option---selected",
+    //   },
+    //   noResult: "No results found",
+    // });
+    // $("#single1").select({
+    //   allowClear: true,
+    //   cls: {
+    //     container: "select---container",
+    //     optionHover: "select---option---hover",
+    //     optionSelected: "select---option---selected",
+    //   },
+    //   noResult: "No results found",
+    // });
+    // $("#single2").select({
+    //   search: true,
+    //   allowClear: true,
+    //   cls: {
+    //     container: "select---container",
+    //     optionHover: "select---option---hover",
+    //     optionSelected: "select---option---selected",
+    //   },
+    //   noResult: "No results found",
+    // });
+    // $("#single3").select({
+    //   search: true,
+    //   allowClear: true,
+    //   cls: {
+    //     container: "select---container",
+    //     optionHover: "select---option---hover",
+    //     optionSelected: "select---option---selected",
+    //   },
+    //   noResult: "No results found",
+    // });
   $("#multiple").select({
     search: true,
     cls: {

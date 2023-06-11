@@ -283,3 +283,14 @@
 .gif .text.money {
   background-image: url("https://media.giphy.com/media/BfFFYPSVYr9UR6EtEL/giphy-downsized-large.gif");
 }
+
+.reflection {
+  text-align: center;
+  font-family: "Ubuntu", sans-serif;
+}
+.reflection > :last-child {
+  transform: rotatex(180deg) translatey(15px);
+  -webkit-mask-image: linear-gradient(transparent 40%, white 90%);
+  mask-image: linear-gradient(transparent 50%, white 90%);
+  opacity: 0.7;
+}

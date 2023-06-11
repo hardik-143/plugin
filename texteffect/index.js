@@ -29,4 +29,10 @@ $(document).ready(function () {
     fontSize: "60px",
     textElement: "h1",
   });
+  $("#reflection").texteffect({
+    effect: "reflection",
+    wrapperElement: "div",
+    fontSize: "60px",
+    textElement: "h1",
+  });
 });

@@ -128,6 +128,28 @@ $.fn.texteffect = function (o) {
     container.append(a);
     addInDOM(container);
   };
+  const createReflection = () => {
+    var dO = {
+      wE: isValidElement(o.wrapperElement) ? o.wrapperElement : "div", // wrapper element
+      tE: isValidElement(o.textElement) ? o.textElement : "p", // text element
+      fS: isValidFontSizeInPx(o.fontSize) ? o.fontSize : "50px", // font size
+      c: isValidColor(o.color) ? o.color : "#1B9C85", // color
+    };
+    const container = $(`<${dO.wE} class="reflection"></${dO.wE}>`);
+    const a = $(`<${dO.tE} class="text">${text}</${dO.tE}>`);
+    a.css({
+      "font-size": dO.fS,
+      color: dO.c,
+    });
+    const b = $(`<${dO.tE} class="text">${text}</${dO.tE}>`);
+    b.css({
+      "font-size": dO.fS,
+      color: dO.c,
+    });
+    container.append(a);
+    container.append(b);
+    addInDOM(container);
+  }
 
   if (o.effect === "wave") {
     createWave(text);
@@ -139,5 +161,7 @@ $.fn.texteffect = function (o) {
     createGlitch(text);
   } else if (o.effect === "gif") {
     createGif(text);
+  } else if (o.effect === "reflection") {
+    createReflection(text);
   }
 };
