@@ -27,6 +27,7 @@
       display: flex;
       align-items: center;
       padding-top: 20px;
+      flex-flow:  row wrap;
       background-color: #f0f0f3;
     }
 
@@ -125,8 +126,12 @@
   <div>
     <h2>show on click</h2>
     <div class="wrapper">
-      <span data-ttooltip data-ttooltip-text="click to hide" data-ttooltip-pos="bottom" data-ttooltip-toggle="click">
+      <span data-ttooltip data-ttooltip-text="click to hide" data-ttooltip-pos="bottom" data-ttooltip-trigger="click">
         click to toggle tooltip</span>
+    </div>
+    <div class="wrapper">
+      <span data-ttooltip data-ttooltip-text="click to hide" data-ttooltip-pos="bottom" data-ttooltip-trigger="contextmenu">
+        right click to toggle tooltip</span>
     </div>
   </div>
   <div>

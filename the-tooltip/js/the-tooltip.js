@@ -110,8 +110,10 @@ function thetooltip(elements) {
       if (element.hasAttribute("data-ttooltip-visible")) {
         createTooltip(element, i);
       } else {
-        if (element.getAttribute("data-ttooltip-toggle") == "click") {
-          element.addEventListener("click", function () {
+        let triggerAttr = element.getAttribute("data-ttooltip-trigger")
+        if (triggerAttr) {
+          element.addEventListener(triggerAttr, function (e) {
+            if(triggerAttr === "contextmenu") e.preventDefault()
             if (doc.querySelector(`.ttooltip-${i}`)) {
               removeTooltip(i);
             } else {
