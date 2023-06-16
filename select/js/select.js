@@ -517,8 +517,8 @@ $.fn.select = function (o) {
         // move select-wrapper__focused class up down on arrow key
   
         // scroll to focused option
-        let currentOffset = sOptionsWrapper.offset().top;
-        let nextTop = options.eq(index).offset().top;
+        let currentOffset = sOptionsWrapper.offset()?.top;
+        let nextTop = options.eq(index).offset()?.top;
         if (isNext) {
           currentOffset = currentOffset + sOptionsWrapper.outerHeight();
           nextTop = nextTop + options.eq(index).outerHeight();
