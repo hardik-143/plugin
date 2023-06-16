@@ -486,45 +486,47 @@ $.fn.select = function (o) {
     }
     let isNext = false;
     // move select-wrapper__focused class up down on arrow key
-    if (e.keyCode == 38 || e.keyCode == 40) {
-      if (e.keyCode == 40) {
-        isNext = true;
+    if ($(".select-wrapper__opened").length > 0) {
+      if (e.keyCode == 38 || e.keyCode == 40) {
+        if (e.keyCode == 40) {
+          isNext = true;
+        }
+        let selectWrapperEle = sWrapper.parent().find(".select-wrapper__opened");
+        let options = selectWrapperEle.find(
+          ".select-wrapper__option:visible:not(.select-wrapper__no-result)"
+        );
+        let focused = selectWrapperEle.find(".select-wrapper__focused");
+        let index = options.index(focused);
+        if (e.keyCode == 38) {
+          index--;
+        } else {
+          index++;
+        }
+        if (index < 0) {
+          index = options.length - 1;
+        }
+        if (index > options.length - 1) {
+          index = 0;
+        }
+        // move select-wrapper__focused class up down on arrow key
+        options
+          .eq(index)
+          .addClass("select-wrapper__focused")
+          .siblings()
+          .removeClass("select-wrapper__focused");
+        // move select-wrapper__focused class up down on arrow key
+  
+        // scroll to focused option
+        let currentOffset = sOptionsWrapper.offset().top;
+        let nextTop = options.eq(index).offset().top;
+        if (isNext) {
+          currentOffset = currentOffset + sOptionsWrapper.outerHeight();
+          nextTop = nextTop + options.eq(index).outerHeight();
+        }
+        let nextOffset = sOptionsWrapper.scrollTop() + (nextTop - currentOffset);
+        sOptionsWrapper.scrollTop(nextOffset);
+        // scroll to focused option
       }
-      let selectWrapperEle = $(".select-wrapper__opened");
-      let options = selectWrapperEle.find(
-        ".select-wrapper__option:visible:not(.select-wrapper__no-result)"
-      );
-      let focused = selectWrapperEle.find(".select-wrapper__focused");
-      let index = options.index(focused);
-      if (e.keyCode == 38) {
-        index--;
-      } else {
-        index++;
-      }
-      if (index < 0) {
-        index = options.length - 1;
-      }
-      if (index > options.length - 1) {
-        index = 0;
-      }
-      // move select-wrapper__focused class up down on arrow key
-      options
-        .eq(index)
-        .addClass("select-wrapper__focused")
-        .siblings()
-        .removeClass("select-wrapper__focused");
-      // move select-wrapper__focused class up down on arrow key
-
-      // scroll to focused option
-      let currentOffset = sOptionsWrapper.offset().top;
-      let nextTop = options.eq(index).offset().top;
-      if (isNext) {
-        currentOffset = currentOffset + sOptionsWrapper.outerHeight();
-        nextTop = nextTop + options.eq(index).outerHeight();
-      }
-      let nextOffset = sOptionsWrapper.scrollTop() + (nextTop - currentOffset);
-      sOptionsWrapper.scrollTop(nextOffset);
-      // scroll to focused option
     }
     if (e.keyCode == 13) {
       // on enter key select option which is focused and close dropdown
