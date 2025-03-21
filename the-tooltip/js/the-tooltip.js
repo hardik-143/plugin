@@ -38,12 +38,14 @@ function thetooltip(elements) {
     ttooltip.innerHTML = dO.content;
 
     // set position of tooltip
-    let eleTop = ele.offsetTop;
-    let eleLeft = ele.offsetLeft;
-    let eleWidth = ele.offsetWidth;
-    let eleHeight = ele.offsetHeight;
+    let eleRect = ele.getBoundingClientRect();
+    let eleTop = eleRect.top;
+    let eleLeft = eleRect.left;
+    let eleWidth = eleRect.width;
+    let eleHeight = eleRect.height;
     let ttooltipWidth = ttooltip.offsetWidth;
     let ttooltipHeight = ttooltip.offsetHeight;
+
 
     if (dO.pos === "top") {
       position.top = eleTop - ttooltipHeight - 10;
